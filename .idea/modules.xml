@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SmartCheckout.iml" filepath="$PROJECT_DIR$/.idea/modules/SmartCheckout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SmartCheckout.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SmartCheckout.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SmartCheckout.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SmartCheckout.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SmartCheckout.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SmartCheckout.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SmartCheckout.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SmartCheckout.app.unitTest.iml" />
+    </modules>
+  </component>
+</project>
