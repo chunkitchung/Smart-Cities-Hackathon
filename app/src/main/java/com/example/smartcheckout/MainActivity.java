@@ -23,19 +23,25 @@ import android.Manifest;
 
 
 import com.example.smartcheckout.ml.LiteModelSsdMobilenetV11Metadata2;
+import com.example.smartcheckout.ml.Mobilenetv1;
 
 import org.tensorflow.lite.support.image.TensorImage;
+import org.tensorflow.lite.support.label.Category;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     Button camera, gallery;
     ImageView imageView;
-    TextView result;
+    TextView result, score;
 
     //This is 300 because the model we use requested images of this size
     int imageSize = 300;
+    //image size for mobilenet model
+    int imageSizeMobile = 224;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         result = findViewById(R.id.result);
         imageView = findViewById(R.id.imageView);
+        score = findViewById(R.id.score);
 
         camera.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -90,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
                 imageView.setImageBitmap(image);
 
                 //This simply prepares imaged to be classified by out model
-                image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
-                classifyImage(image);
+                image = Bitmap.createScaledBitmap(image, imageSizeMobile, imageSizeMobile, false);
+                classifyImageMobile(image);
             }else{
                 //USER USES AN IMAGE FROM GALLERY
                 Uri dat = data.getData();
@@ -105,11 +112,46 @@ public class MainActivity extends AppCompatActivity {
                 imageView.setImageBitmap(image);
 
                 //scale image to be classified by our model
-                image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
-                classifyImage(image);
+                image = Bitmap.createScaledBitmap(image, imageSizeMobile, imageSizeMobile, false);
+                classifyImageMobile(image);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /*
+      Using the mobile net model
+     Takes a bitmap image, feeds it into our model, and returns the result
+     */
+    public void classifyImageMobile(Bitmap bitmap) {
+        try {
+            Mobilenetv1 model = Mobilenetv1.newInstance(this);
+
+            // Creates inputs for reference.
+            TensorImage image = TensorImage.fromBitmap(bitmap);
+
+            // Runs model inference and gets result.
+            Mobilenetv1.Outputs outputs = model.process(image);
+            List<Category> probability = outputs.getProbabilityAsCategoryList();
+
+            float maxScore = 0;
+            Category category = null;
+
+            for(Category c : probability){
+                if(c.getScore() > maxScore){
+                    maxScore = c.getScore();
+                    category = c;
+                }
+            }
+
+            result.setText(category.getLabel());
+            // Releases model resources if no longer used.
+            model.close();
+        } catch (IOException e) {
+            // TODO Handle the exception
+        }
+
+
     }
 
     /*
@@ -132,7 +174,17 @@ public class MainActivity extends AppCompatActivity {
             String category = detectionResult.getCategoryAsString();
             float score = detectionResult.getScoreAsFloat();
 
-            //trying confidence array
+//            //trying confidence array
+//            float [] confidences = outputFeature0.getFloatArray();
+//            //find the index of the class with bigges confidence
+//            int maxPos = 0;
+//            float maxConfidence = 0;
+//            for(int i = 0; i < confidences.length; i++){
+//                if(confidences[i] > maxConfidence){
+//                    maxConfidence = confidences[i];
+//                    maxPos = i;
+//                }
+//            }
 
             //Update the view with result
             result.setText(category + " & score: " + score);

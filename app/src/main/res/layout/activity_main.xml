@@ -57,4 +57,19 @@
         android:layout_below="@+id/classified"
         />
 
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="179dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="175dp"
+        android:text=""
+        android:textColor="#C30000"
+        android:textSize="27sp"
+        android:textStyle="bold" />
+
 </RelativeLayout>
