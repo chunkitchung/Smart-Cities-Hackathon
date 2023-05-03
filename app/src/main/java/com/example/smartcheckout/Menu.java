@@ -22,4 +22,11 @@ public class Menu extends AppCompatActivity {
         Intent i = new Intent(this, ShopActivity.class);
         startActivity(i);
     }
+
+    //Onclick to go to my transactions
+    public void transactions(View v){
+        Intent i = new Intent(this, TransactionActivity.class);
+        startActivity(i);
+    }
+
 }

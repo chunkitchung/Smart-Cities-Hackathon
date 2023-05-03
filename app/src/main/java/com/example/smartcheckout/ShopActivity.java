@@ -50,9 +50,9 @@ import java.util.Map;
     Allows the user to start a tracked shopping experience, where they can add items into their cart using image recognition
  */
 public class ShopActivity extends AppCompatActivity {
-    private ArrayList<String> cart;
+    private ArrayList<Item> cart;
     private ListView cartListView;
-    private ArrayAdapter<String> adapter;
+    private ItemAdapter adapter;
     private View itemPopup;
 
     private AlertDialog dialog;
@@ -83,8 +83,8 @@ public class ShopActivity extends AppCompatActivity {
         //Setting up view items and adapter
         costView = findViewById(R.id.cost_view);
         cartListView = findViewById(R.id.cart_list_view);
-        cart = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cart);
+        cart = new ArrayList<Item>();
+        adapter = new ItemAdapter(this, cart);
         cartListView.setAdapter(adapter);
 
         //initialize auth
@@ -111,7 +111,7 @@ public class ShopActivity extends AppCompatActivity {
         }
     }
 
-    //Should catch the result of the camera or gallery access
+    //Should catch the result of the camera or gallery access and add new item
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         if(resultCode == RESULT_OK){
@@ -135,9 +135,10 @@ public class ShopActivity extends AppCompatActivity {
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    cart.add(classification.getText().toString());
-                    //Also add the cost of this item
+                    cart.add(new Item(classification.getText().toString(), 0));
+                    //update the cost async
                     getCost(classification.getText().toString());
+                    //Also add the cost of this item
                     updateAdapter();
                 }
             });
@@ -215,7 +216,7 @@ public class ShopActivity extends AppCompatActivity {
 
     //Simple method to update cart list view adapter after changes
     public void updateAdapter(){
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cart);
+        adapter = new ItemAdapter(this, cart);
         cartListView.setAdapter(adapter);
     }
 
@@ -229,9 +230,7 @@ public class ShopActivity extends AppCompatActivity {
         //Build transaction
 
         //A transaction is made up of a string array of items and a time
-        Map<String, Object> transaction = new HashMap<String, Object>();
-        transaction.put("items", cart);
-        transaction.put("time", LocalDateTime.now());
+        Transaction transaction = new Transaction(cart, LocalDateTime.now());
 
         //add a new transaction to user's document
         db.collection("users").document(user.getUid()).collection("transactions").add(transaction)
@@ -275,7 +274,11 @@ public class ShopActivity extends AppCompatActivity {
                                 double num = ((Number) data.get("cost")).doubleValue();
                                 totalCost += num;
                                 costView.setText(String.format("$%.2f", totalCost));
+
+                                //THIS IS A BIT RISKY
+                                cart.get(cart.size()-1).setCost(num);
                                 Log.i("DEBUG", "Item found in db!!! cost += " + num);
+                                updateAdapter();
 
                             }
                         }else{
