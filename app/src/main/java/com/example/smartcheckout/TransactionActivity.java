@@ -3,8 +3,11 @@ package com.example.smartcheckout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -64,6 +67,16 @@ public class TransactionActivity extends AppCompatActivity {
         transactionView = findViewById(R.id.transaction_list_view);
         adapter = new TransactionAdapter(this, transactions);
         transactionView.setAdapter(adapter);
+        //Goes to Transaction View Activity to see items in a bigger view
+        transactionView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(TransactionActivity.this, TransactionViewActivity.class);
+                //Should pass the transaction that was clicked in order to reduce db calls !
+                intent.putExtra("transaction", transactions.get(i));
+                startActivity(intent);
+            }
+        });
 
     }
 

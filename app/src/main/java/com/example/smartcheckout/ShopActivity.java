@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,10 +16,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -59,7 +63,7 @@ public class ShopActivity extends AppCompatActivity {
     private AlertDialog.Builder dialogBuilder;
 
     private ImageView itemImage;
-    private Button acceptButton, denyButton;
+    private ImageButton acceptButton, denyButton;
     //This is 300 because the model we use requested images of this size
     int imageSize = 300;
     //image size for mobilenet model
@@ -86,6 +90,41 @@ public class ShopActivity extends AppCompatActivity {
         cart = new ArrayList<Item>();
         adapter = new ItemAdapter(this, cart);
         cartListView.setAdapter(adapter);
+
+        //On long click adapter to allow users to delete items
+        cartListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int index, long l) {
+                Item item = cart.get(index);
+
+                //Creat a popup to delete the item long pressed
+                new android.app.AlertDialog.Builder(ShopActivity.this,  R.style.MyDialogTheme)
+                        .setTitle("Do you want to delete " + item.getName() +"?")
+
+                        //Delete
+                        .setPositiveButton(Html.fromHtml("<font color='#0d0d0c'>Yes</font>"), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int arg1) {
+                                //Also have to update total cost and ui
+                                Item item = cart.get(index);
+                                totalCost -= item.getCost();
+                                costView.setText(String.format("$%.2f", totalCost));
+
+                                //Then we can remove the item and update listview
+                                cart.remove(index);
+                                updateAdapter();
+                            }
+                        })
+
+                        //Cancel
+                        .setNegativeButton(Html.fromHtml("<font color='#0d0d0c'>No</font>"), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).create().show();
+                return false;
+            }
+        });
 
         //initialize auth
         mAuth = FirebaseAuth.getInstance();
@@ -140,6 +179,7 @@ public class ShopActivity extends AppCompatActivity {
                     getCost(classification.getText().toString());
                     //Also add the cost of this item
                     updateAdapter();
+                    dialog.cancel();
                 }
             });
 
