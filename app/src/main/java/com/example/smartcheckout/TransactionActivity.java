@@ -21,8 +21,8 @@ import java.util.HashMap;
 
 public class TransactionActivity extends AppCompatActivity {
     private ListView transactionView;
-    private ArrayAdapter<HashMap<String, Object>> adapter;
-    private ArrayList<HashMap<String, Object>> transactions;
+    private TransactionAdapter adapter;
+    private ArrayList<Transaction> transactions;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private FirebaseFirestore db;
@@ -37,18 +37,24 @@ public class TransactionActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
 
+        transactions = new ArrayList<Transaction>();
+
         //Get transactions from database
         db.collection("users").document(user.getUid()).collection("transactions").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
+                            //Goes through each transaction document resulting from our query
                             for(QueryDocumentSnapshot document : task.getResult()){
-                                //add all transactions to the list of transactions
-                                transactions.add((HashMap<String, Object>) document.getData());
+                                //add transaction to list
+                                transactions.add((Transaction) document.toObject(Transaction.class));
                             }
                             Log.i("DEBUG", "Added transactions");
-
+                            for(Transaction t: transactions){
+                                Log.i("DEBUGtime", t.getTimeString());
+                            }
+                            updateAdapter();
                         }
 
                     }
@@ -57,5 +63,13 @@ public class TransactionActivity extends AppCompatActivity {
         //Setup views
         transactionView = findViewById(R.id.transaction_list_view);
         adapter = new TransactionAdapter(this, transactions);
+        transactionView.setAdapter(adapter);
+
     }
+
+    public void updateAdapter(){
+        adapter = new TransactionAdapter(this, transactions);
+        transactionView.setAdapter(adapter);
+    }
+
 }

@@ -25,14 +25,6 @@ public class Transaction implements Serializable {
         this.store = store;
     }
 
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
     public double getCost() {
         return Cost;
     }
@@ -42,16 +34,25 @@ public class Transaction implements Serializable {
     }
 
     private String store;
-    private LocalDateTime time;
+
+    public String getTimeString() {
+        return timeString;
+    }
+
+    public void setTimeString(String timeString) {
+        this.timeString = timeString;
+    }
+
+    private String timeString;
     private double Cost;
 
     public Transaction(){
         items = new ArrayList<Item>();
     }
 
-    public Transaction(ArrayList<Item> items, LocalDateTime time){
+    public Transaction(ArrayList<Item> items, String time){
         this.items = items;
-        this.time = time;
+        this.timeString = time;
     }
 
 }

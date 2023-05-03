@@ -230,7 +230,7 @@ public class ShopActivity extends AppCompatActivity {
         //Build transaction
 
         //A transaction is made up of a string array of items and a time
-        Transaction transaction = new Transaction(cart, LocalDateTime.now());
+        Transaction transaction = new Transaction(cart, LocalDateTime.now().toString());
 
         //add a new transaction to user's document
         db.collection("users").document(user.getUid()).collection("transactions").add(transaction)
@@ -268,7 +268,7 @@ public class ShopActivity extends AppCompatActivity {
                             //get the data from this snapshot
                             DocumentSnapshot document = task.getResult();
                             HashMap<String, Object> data = (HashMap<String, Object>) document.getData();
-                            if(data.isEmpty()){
+                            if(data == null){
                                 Log.i("DEUBG", "db for this item is Is empty");
                             }else{
                                 double num = ((Number) data.get("cost")).doubleValue();

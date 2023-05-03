@@ -27,4 +27,9 @@ class Item implements Serializable {
         this.name = name;
         this.cost = cost;
     }
+    public Item(){
+        name = "";
+        cost = 0;
+    }
+
 }

@@ -17,11 +17,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TransactionAdapter extends ArrayAdapter<HashMap<String, Object>> {
+public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
     TextView transactionName, time;
 
-    public TransactionAdapter(@NonNull Context context, ArrayList<HashMap<String, Object>> transactions) {
+    public TransactionAdapter(@NonNull Context context, ArrayList<Transaction> transactions) {
         super(context, 0, transactions);
     }
 
@@ -37,7 +37,7 @@ public class TransactionAdapter extends ArrayAdapter<HashMap<String, Object>> {
         }
 
         //get the position of the view from array adapter
-        HashMap<String, Object> transaction = getItem(position);
+        Transaction transaction = getItem(position);
         assert transaction != null;
 
         //Set up the view
@@ -47,9 +47,9 @@ public class TransactionAdapter extends ArrayAdapter<HashMap<String, Object>> {
         //In the future this should be something that uniquely identifies the transaction
         //Maybe what store or location the transaction was at
         transactionName.setText("Store Transaction");
-        time.setText(transaction.get("time").toString());
+        time.setText(transaction.getTimeString());
 
         // get the position of the view from the ArrayAdapter
-        return convertView;
+        return currentItemView;
     }
 }
