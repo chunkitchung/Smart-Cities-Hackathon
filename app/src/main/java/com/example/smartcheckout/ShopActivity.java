@@ -1,5 +1,6 @@
 package com.example.smartcheckout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -20,18 +21,27 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smartcheckout.ml.Mobilenetv1;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.type.Date;
 
 import org.checkerframework.checker.units.qual.A;
 import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.label.Category;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*
     Allows the user to start a tracked shopping experience, where they can add items into their cart using image recognition
@@ -56,6 +66,7 @@ public class ShopActivity extends AppCompatActivity {
     private TextView classification;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +78,7 @@ public class ShopActivity extends AppCompatActivity {
         cart = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cart);
         cartListView.setAdapter(adapter);
+
     }
 
     /*
@@ -195,10 +207,37 @@ public class ShopActivity extends AppCompatActivity {
         TODO: present user with their total cost accumulatied
         and also send this transaction into their db collection for transactions
      */
-    public void checkout(){
+    public void checkout(View v){
 
+        //initialize auth
+        mAuth = FirebaseAuth.getInstance();
         //get the current user
         user = mAuth.getCurrentUser();
+        //initialize db
+        db = FirebaseFirestore.getInstance();
+
+        //Build transaction
+
+        //A transaction is made up of a string array of items and a time
+        Map<String, Object> transaction = new HashMap<String, Object>();
+        transaction.put("items", cart);
+        transaction.put("time", LocalDateTime.now());
+
+        //add a new transaction to user's document
+        db.collection("users").document(user.getUid()).collection("transactions").add(transaction)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(ShopActivity.this, "Transaction has been recorded", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(ShopActivity.this, "Unable to proceed with transaction", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+        //Send user back to home screen
+        finish();
     }
 
 }
