@@ -11,17 +11,22 @@
         android:gravity="center"
         android:orientation="vertical">
         <Button
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
             android:text="SHOP"
             android:onClick="shop"
-            android:layout_marginBottom="100dp"/>
+            android:layout_marginBottom="100dp"
+            android:layout_height="50dp"
+            android:layout_width="200dp"
+            android:textColor="@color/black"
+            style="?attr/materialButtonOutlinedStyle"
+            />
 
         <Button
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
             android:text="My Transactions"
             android:onClick="transactions"
+            style="?attr/materialButtonOutlinedStyle"
+            android:textColor="@color/black"
             />
     </LinearLayout>
 
