@@ -10,18 +10,27 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cinderela"
+            android:gravity="center"
+            android:text="Smart\nCheckout"
+            android:textSize="60sp" />
+
         <Button
             android:text="SHOP"
             android:onClick="shop"
-            android:layout_marginBottom="100dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="60dp"
             android:layout_height="50dp"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:textColor="@color/black"
             style="?attr/materialButtonOutlinedStyle"
             />
 
         <Button
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="50dp"
             android:text="My Transactions"
             android:onClick="transactions"

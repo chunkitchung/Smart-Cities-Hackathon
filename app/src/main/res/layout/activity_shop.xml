@@ -11,12 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
-        <TextView
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="My Cart"
-            android:textSize="30dp" />
+            android:src="@drawable/shopping_cart_fill0_wght400_grad0_opsz48"/>
         <ListView
             android:id="@+id/cart_list_view"
             android:layout_width="match_parent"
