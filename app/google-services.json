@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "501354145525",
+    "project_id": "smartcheckout-f53b1",
+    "storage_bucket": "smartcheckout-f53b1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501354145525:android:1d1b27d5ae79628f1047bc",
+        "android_client_info": {
+          "package_name": "com.example.smartcheckout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501354145525-ppk0t7ddn6o18nqiqfaucuvik4bus589.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLm7yS3YbK67IjpdnidwHA1CzSOJp1cnU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501354145525-ppk0t7ddn6o18nqiqfaucuvik4bus589.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
