@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,7 +30,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.type.Date;
 
 import org.checkerframework.checker.units.qual.A;
@@ -67,6 +70,10 @@ public class ShopActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private FirebaseFirestore db;
+    private TextView costView;
+
+    //Store the total accumulated cost of this transaction
+    private float totalCost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +81,18 @@ public class ShopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shop);
 
         //Setting up view items and adapter
+        costView = findViewById(R.id.cost_view);
         cartListView = findViewById(R.id.cart_list_view);
         cart = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cart);
         cartListView.setAdapter(adapter);
+
+        //initialize auth
+        mAuth = FirebaseAuth.getInstance();
+        //get the current user
+        user = mAuth.getCurrentUser();
+        //initialize db
+        db = FirebaseFirestore.getInstance();
 
     }
 
@@ -121,6 +136,8 @@ public class ShopActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     cart.add(classification.getText().toString());
+                    //Also add the cost of this item
+                    getCost(classification.getText().toString());
                     updateAdapter();
                 }
             });
@@ -209,13 +226,6 @@ public class ShopActivity extends AppCompatActivity {
      */
     public void checkout(View v){
 
-        //initialize auth
-        mAuth = FirebaseAuth.getInstance();
-        //get the current user
-        user = mAuth.getCurrentUser();
-        //initialize db
-        db = FirebaseFirestore.getInstance();
-
         //Build transaction
 
         //A transaction is made up of a string array of items and a time
@@ -238,6 +248,42 @@ public class ShopActivity extends AppCompatActivity {
 
         //Send user back to home screen
         finish();
+    }
+
+    /*
+        getCost:
+
+        returns the cost of the given item if it is present
+        Cost are taken from the db in realtime so they can be changed
+
+        DB connection is async, so i can't just reutrn the cost, have to update the cost
+        whenever it is read, may be able to imporove this in the future?
+     */
+    public void getCost(String item){
+        db.collection("items").document(item).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+
+                            //get the data from this snapshot
+                            DocumentSnapshot document = task.getResult();
+                            HashMap<String, Object> data = (HashMap<String, Object>) document.getData();
+                            if(data.isEmpty()){
+                                Log.i("DEUBG", "db for this item is Is empty");
+                            }else{
+                                double num = ((Number) data.get("cost")).doubleValue();
+                                totalCost += num;
+                                costView.setText(String.format("$%.2f", totalCost));
+                                Log.i("DEBUG", "Item found in db!!! cost += " + num);
+
+                            }
+                        }else{
+                            Log.i("DEBUG", "Item not found in db");
+                        }
+                    }
+                });
+
     }
 
 }
