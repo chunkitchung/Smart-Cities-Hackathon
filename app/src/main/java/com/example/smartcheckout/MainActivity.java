@@ -47,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //Temp setup!!!!!
+        Intent i = new Intent(this, ShopActivity.class);
+        startActivity(i);
 
         //setup view stuff
         camera = findViewById(R.id.button);
@@ -150,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             // TODO Handle the exception
         }
-
 
     }
 
