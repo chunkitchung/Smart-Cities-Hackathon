@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.smartcheckout.ml.Mobilenetv1;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.checkerframework.checker.units.qual.A;
 import org.tensorflow.lite.support.image.TensorImage;
@@ -52,6 +54,8 @@ public class ShopActivity extends AppCompatActivity {
     private Bitmap image;
 
     private TextView classification;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,5 +190,15 @@ public class ShopActivity extends AppCompatActivity {
         cartListView.setAdapter(adapter);
     }
 
+    /*
+        Checkout the user
+        TODO: present user with their total cost accumulatied
+        and also send this transaction into their db collection for transactions
+     */
+    public void checkout(){
+
+        //get the current user
+        user = mAuth.getCurrentUser();
+    }
 
 }

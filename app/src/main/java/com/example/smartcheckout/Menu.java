@@ -2,6 +2,7 @@ package com.example.smartcheckout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,6 +19,7 @@ public class Menu extends AppCompatActivity {
 
     //Onclick to start shopping
     public void shop(View v){
-
+        Intent i = new Intent(this, ShopActivity.class);
+        startActivity(i);
     }
 }

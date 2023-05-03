@@ -91,7 +91,7 @@ public class SignUp extends AppCompatActivity {
                                 user.updateProfile(userProfileChangeRequest);
 
                                 //Go to Home page, temporarily goes to shop activity
-                                Intent i = new Intent(SignUp.this, ShopActivity.class);
+                                Intent i = new Intent(SignUp.this, Menu.class);
                                 startActivity(i);
                             } else {
                                 // If sign in fails, display a message to the user.

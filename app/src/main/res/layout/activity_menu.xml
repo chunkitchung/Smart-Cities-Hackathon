@@ -10,17 +10,18 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="Start Shopping!"
-            android:gravity="center"
-            />
         <Button
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="SHOP"
-            android:onClick="shop"/>
+            android:onClick="shop"
+            android:layout_marginBottom="100dp"/>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="My Transactions"
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
