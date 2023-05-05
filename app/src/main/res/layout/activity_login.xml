@@ -28,7 +28,6 @@
             android:layout_height="50dp"
             android:layout_marginTop="100dp"
             android:gravity="center"
-            android:text="test@gmail.com"
             android:hint="ENTER EMAIL"></EditText>
 
         <EditText
@@ -37,7 +36,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="pass11"
+            android:password="true"
             android:hint="ENTER PASSWORD"></EditText>
 
         <LinearLayout

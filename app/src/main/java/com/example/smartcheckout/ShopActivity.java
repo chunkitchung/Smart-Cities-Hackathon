@@ -45,6 +45,7 @@ import org.tensorflow.lite.support.label.Category;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -270,7 +271,8 @@ public class ShopActivity extends AppCompatActivity {
         //Build transaction
 
         //A transaction is made up of a string array of items and a time
-        Transaction transaction = new Transaction(cart, LocalDateTime.now().toString());
+        String formatedTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.uuuu HH:mm:ss"));
+        Transaction transaction = new Transaction(cart, formatedTime);
 
         //add a new transaction to user's document
         db.collection("users").document(user.getUid()).collection("transactions").add(transaction)
