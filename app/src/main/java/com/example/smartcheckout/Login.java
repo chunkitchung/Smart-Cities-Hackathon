@@ -16,7 +16,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Login extends AppCompatActivity {
+import android.widget.Button;
+import com.google.android.material.snackbar.Snackbar;
+
+public class Login extends AppCompatActivity     {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     EditText email, password;
@@ -26,6 +29,15 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Button myButton = findViewById(R.id.help_button);
+        myButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Code to be executed when the button is clicked
+                Snackbar snackbar = Snackbar.make(v, "log in with an existing account or create an account by signing up", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         init();
@@ -72,4 +84,20 @@ public class Login extends AppCompatActivity {
         Intent i = new Intent(this, SignUp.class);
         startActivity(i);
     }
+
+    //    Button button = (Button) findViewById(R.id.help_button);
+//    button.setOnClickListener(new View.OnClickListener() {
+//        public void help(View v) {
+//            Snackbar snackbar = Snackbar.make(v, "log in with an existing account or create an account by signing up", Snackbar.LENGTH_LONG);
+//            snackbar.show();
+//        }
+//    });
+//    myButton.setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            Snackbar snackbar = Snackbar.make(v, "log in with an existing account or create an account by signing up", Snackbar.LENGTH_LONG);
+//            snackbar.show();
+//        }
+//    });
+
 }

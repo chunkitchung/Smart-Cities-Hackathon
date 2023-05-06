@@ -46,8 +46,8 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
         //In the future this should be something that uniquely identifies the transaction
         //Maybe what store or location the transaction was at
-        transactionName.setText("Store Transaction");
-        time.setText(transaction.getTimeString());
+        transactionName.setText(transaction.getTimeString());
+        time.setText("Transaction");
 
         // get the position of the view from the ArrayAdapter
         return currentItemView;

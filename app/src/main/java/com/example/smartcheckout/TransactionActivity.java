@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class TransactionActivity extends AppCompatActivity {
@@ -41,6 +42,7 @@ public class TransactionActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         transactions = new ArrayList<Transaction>();
+        Collections.sort(transactions, new TransactionComparator());
 
         //Get transactions from database
         db.collection("users").document(user.getUid()).collection("transactions").get()
@@ -80,7 +82,12 @@ public class TransactionActivity extends AppCompatActivity {
 
     }
 
+    //Just updates the adapter for transaction view
+    //Should also resort the transactions
     public void updateAdapter(){
+        //sort using custom comparator
+        Collections.sort(transactions, new TransactionComparator());
+
         adapter = new TransactionAdapter(this, transactions);
         transactionView.setAdapter(adapter);
     }

@@ -5,38 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Menu">
+
+    <ImageButton
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:padding="5dp"
+        android:src="@drawable/settings_fill0_wght400_grad0_opsz48"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="editProfile"
+        android:background="@null"
+        android:backgroundTint="@null"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+
+        android:layout_marginTop="48dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             android:fontFamily="@font/cinderela"
             android:gravity="center"
             android:text="Smart\nCheckout"
-            android:textSize="60sp" />
+            android:textSize="60sp"
+            />
 
         <Button
-            android:text="SHOP"
-            android:onClick="shop"
-            android:layout_marginTop="40dp"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             android:layout_marginBottom="60dp"
-            android:layout_height="50dp"
-            android:layout_width="250dp"
-            android:textColor="@color/black"
-            style="?attr/materialButtonOutlinedStyle"
-            />
+            android:onClick="shop"
+            android:padding="20dp"
+            android:text="SHOP"
+            android:textColor="@color/black" />
 
         <Button
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:text="My Transactions"
-            android:onClick="transactions"
             style="?attr/materialButtonOutlinedStyle"
-            android:textColor="@color/black"
-            />
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:onClick="transactions"
+            android:padding="20dp"
+            android:text="My Transactions"
+            android:textColor="@color/black" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
