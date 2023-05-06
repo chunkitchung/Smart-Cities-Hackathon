@@ -19,13 +19,19 @@ public class Menu extends AppCompatActivity {
 
     //Onclick to start shopping
     public void shop(View v){
-        Intent i = new Intent(this, MapsActivity2.class);
+        Intent i = new Intent(this, StoreSelection.class);
         startActivity(i);
     }
 
     //Onclick to go to my transactions
     public void transactions(View v){
         Intent i = new Intent(this, TransactionActivity.class);
+        startActivity(i);
+    }
+
+    //Onclick to go to edit profile
+    public void editProfile(View v){
+        Intent i = new Intent(this,EditProfile.class);
         startActivity(i);
     }
 

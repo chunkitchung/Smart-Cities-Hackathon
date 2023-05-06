@@ -37,14 +37,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAfqZPNDhKj_iRWkHNwa9VvyMxeIFQFbpo" />
+        <uses-library android:name="com.google.android.maps" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-        <activity
-            android:name=".MapsActivity2"
-            android:exported="false"
-            android:label="@string/title_activity_maps2" />
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -77,9 +73,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" />
     </application>
 
 </manifest>

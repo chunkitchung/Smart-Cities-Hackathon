@@ -3,11 +3,26 @@ plugins {
     // Add the Google services Gradle plugin
     id 'com.google.gms.google-services'
     //google maps
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 
 }
 
 android {
+    signingConfigs {
+        release {
+        storeFile file('C:\\Users\\bungi\\AndroidStudioProjects\\Smart-Cities-Hackathon\\my-new-release-key.keystore')
+            storePassword 'pass11'
+            keyAlias 'key1'
+            keyPassword 'pass11'
+        }
+
+        debug {
+            storeFile file('C:\\Users\\bungi\\AndroidStudioProjects\\Smart-Cities-Hackathon\\my-new-release-key.keystore')
+            storePassword 'pass11'
+            keyAlias 'key1'
+            keyPassword 'pass11'
+        }
+
+    }
     compileSdk 33
 
     defaultConfig {
@@ -18,14 +33,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -56,5 +66,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-auth'
+
+    //Mapbox
+    implementation ('com.mapbox.maps:android:10.13.0'){
+        exclude group: 'group_name', module: 'module_name'
+    }
 
 }

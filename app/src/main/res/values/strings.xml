@@ -2,4 +2,6 @@
     <string name="app_name">SmartCheckout</string>
     <string name="my_map_api_key">AIzaSyAfqZPNDhKj_iRWkHNwa9VvyMxeIFQFbpo</string>
     <string name="title_activity_maps2">MapsActivity2</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoiaXNhaWFoODgiLCJhIjoiY2xoYzR6dTZiMGM1dTNocnA5MTY1NDlwciJ9.LuCuT9ZXDm06mfFTv76sBQ</string>
+
 </resources>

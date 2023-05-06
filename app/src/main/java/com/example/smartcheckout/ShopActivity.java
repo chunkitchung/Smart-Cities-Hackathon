@@ -275,8 +275,7 @@ public class ShopActivity extends AppCompatActivity {
         Transaction transaction = new Transaction(cart, formatedTime);
 
         //add a new transaction to user's document
-        db.collection("users").document(user.getUid()).collection("transactions").add(transaction.getTimeString())
-                .set(transaction)
+        db.collection("users").document(user.getUid()).collection("transactions").add(transaction)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -301,8 +300,6 @@ public class ShopActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
-
-        }
 
         //Send user back to home screen
         finish();
