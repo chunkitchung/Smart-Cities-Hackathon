@@ -73,7 +73,19 @@
                 android:padding="20dp"
                 android:text="Sign Up"
                 android:textColor="@color/black" />
+
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/help_button"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="help"
+            android:padding="5dp"
+            android:text="Help"
+            android:textColor="@color/black" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
