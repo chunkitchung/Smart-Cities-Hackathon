@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SmartCheckout</string>
+    <string name="my_map_api_key">AIzaSyAfqZPNDhKj_iRWkHNwa9VvyMxeIFQFbpo</string>
+    <string name="title_activity_maps2">MapsActivity2</string>
 </resources>

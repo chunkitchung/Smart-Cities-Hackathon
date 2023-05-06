@@ -19,7 +19,7 @@ public class Menu extends AppCompatActivity {
 
     //Onclick to start shopping
     public void shop(View v){
-        Intent i = new Intent(this, ShopActivity.class);
+        Intent i = new Intent(this, MapsActivity2.class);
         startActivity(i);
     }
 
