@@ -275,7 +275,7 @@ public class ShopActivity extends AppCompatActivity {
         Transaction transaction = new Transaction(cart, formatedTime);
 
         //add a new transaction to user's document
-        db.collection("users").document(user.getUid()).collection("transactions").add(transaction).get(transaction.getTimeString())
+        db.collection("users").document(user.getUid()).collection("transactions").add(transaction.getTimeString())
                 .set(transaction)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
