@@ -275,7 +275,8 @@ public class ShopActivity extends AppCompatActivity {
         Transaction transaction = new Transaction(cart, formatedTime);
 
         //add a new transaction to user's document
-        db.collection("users").document(user.getUid()).collection("transactions").add(transaction)
+        db.collection("users").document(user.getUid()).collection("transactions").add(transaction).get(transaction.getTimeString())
+                .set(transaction)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -286,6 +287,22 @@ public class ShopActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        //get all documents in the collection
+//        db.collection("transactions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                        Log.d(TAG, document.getId() + " => " + document.getData());
+//                    }
+//                } else {
+//                    Log.d(TAG, "Error getting documents: ", task.getException());
+//                }
+//            }
+//        });
+
+        }
 
         //Send user back to home screen
         finish();
